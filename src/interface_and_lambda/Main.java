@@ -99,10 +99,10 @@ public class Main {
         Function<String, Double> ifTrue = f -> Double.parseDouble(f);
         Function<String, Integer> ifFalse = f -> Integer.parseInt(f);
 
-        Function<String, Object> test = ternaryOperator(condition, ifTrue, ifFalse);
+        Function<String, Object> ternaryOperator = ternaryOperator(condition, ifTrue, ifFalse);
 
-        System.out.println(test.apply(s1).getClass().getSimpleName() + " - " + test.apply(s1));
-        System.out.println(test.apply(s2).getClass().getSimpleName() + " - " + test.apply(s2));
+        System.out.println(ternaryOperator.apply(s1).getClass().getSimpleName() + " - " + ternaryOperator.apply(s1));
+        System.out.println(ternaryOperator.apply(s2).getClass().getSimpleName() + " - " + ternaryOperator.apply(s2));
 
     }
 
