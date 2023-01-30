@@ -1,10 +1,12 @@
 package interface_and_lambda;
 
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Random;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
+import java.util.function.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
@@ -104,6 +106,29 @@ public class Main {
         System.out.println(ternaryOperator.apply(s1).getClass().getSimpleName() + " - " + ternaryOperator.apply(s1));
         System.out.println(ternaryOperator.apply(s2).getClass().getSimpleName() + " - " + ternaryOperator.apply(s2));
 
+        System.out.println(".....................");
+
+
+// Homework on the topic "Stream"
+// Exercise 1
+        Integer [] num = new Integer[10];
+        for (int i = 0; i < num.length; i++) {
+            num[i] = i;
+        }
+        Stream<Integer> strInteger = Arrays.stream(num);
+        Comparator <Integer> comparator = ((o1, o2) -> (o1 > o2) ? 1 : -1);
+        BiConsumer <Integer, Integer> biConsumer = (i1, i2) -> System.out.println("First - " + i1 + "; Last - " + i2);
+        findMinMax(strInteger, comparator,biConsumer);
+
+// Exercise 2
+        Stream <Integer> stream = Arrays.stream(num).filter(x -> x%2==0);
+        System.out.println(stream.count());
+
+
+// Задание 2
+//Реализуйте метод, который принимает на вход список целых чисел и
+// определяет количество четных и выводит их в консоль.
+// Решать именно с применением Stream API.
     }
 
     public static <T, U> Function <T, U> ternaryOperator (
@@ -114,4 +139,18 @@ public class Main {
         return  t -> condition.test(t) ? ifTrue.apply(t) : ifFalse.apply(t);
     }
 
+    public static <T> void findMinMax (
+        Stream <? extends T> stream,
+        Comparator <? super T> order,
+        BiConsumer <? super T, ? super T> minMaxConsumer
+    ){
+        List <T> list = stream.collect(Collectors.toList());
+        T min = null;
+        T max = null;
+        if (list.size()!=0){
+            min = list.get(0);
+            max = list.get(list.size()-1);
+        }
+        minMaxConsumer.accept(min, max);
+    }
 }
